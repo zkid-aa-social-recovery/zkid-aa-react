@@ -1,6 +1,6 @@
-import Landing from "./components/Landing";
-import { ChakraBaseProvider, extendBaseTheme } from "@chakra-ui/react";
-import chakraTheme from "@chakra-ui/theme";
+import Landing from "./components/Landing"
+import { ChakraBaseProvider, extendBaseTheme } from "@chakra-ui/react"
+import chakraTheme from "@chakra-ui/theme"
 
 const {
   Modal,
@@ -32,8 +32,10 @@ const {
   TabList,
   TabPanels,
   Tab,
+  useMultiStyleConfig,
+
   TabPanel,
-} = chakraTheme.components;
+} = chakraTheme.components
 
 const theme = extendBaseTheme({
   components: {
@@ -67,8 +69,9 @@ const theme = extendBaseTheme({
     TabPanels,
     Tab,
     TabPanel,
+    useMultiStyleConfig,
   },
-});
+})
 
 function App() {
   // return <Landing />;
@@ -76,7 +79,7 @@ function App() {
     <ChakraBaseProvider theme={theme}>
       <Landing />
     </ChakraBaseProvider>
-  );
+  )
 }
 
-export default App;
+export default App

@@ -1,15 +1,14 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import { ChakraProvider } from "@chakra-ui/react";
-import "./index.css";
-import App from "./App";
-import OverviewPage from "./pages/OverviewPage";
-import AccountRecoveryPage from "./pages/AccountRecoveryPage";
-import MessageCenterPage from "./pages/MessageCenterPage";
+import React from "react"
+import ReactDOM from "react-dom/client"
+import { ChakraProvider } from "@chakra-ui/react"
+import "./index.css"
+import App from "./App"
+import OverviewPage from "./pages/OverviewPage"
+import AccountRecoveryPage from "./pages/AccountRecoveryPage"
+import MessageCenterPage from "./pages/MessageCenterPage"
 
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Owner from "./components/Owner";
-import Landing from "./components/Landing";
+import { createBrowserRouter, RouterProvider } from "react-router-dom"
+import Owner from "./components/Owner"
 
 const router = createBrowserRouter([
   {
@@ -25,13 +24,13 @@ const router = createBrowserRouter([
       { path: "/owner/message-center", element: <MessageCenterPage /> },
     ],
   },
-]);
+])
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
+const root = ReactDOM.createRoot(document.getElementById("root"))
 root.render(
   <ChakraProvider>
     <RouterProvider router={router}>
       <App />
     </RouterProvider>
   </ChakraProvider>
-);
+)
