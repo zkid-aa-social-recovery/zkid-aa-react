@@ -13,48 +13,50 @@ import {
   AlertIcon,
   Spinner,
   ModalCloseButton,
-} from "@chakra-ui/react";
-import LoremIpsum from "react-lorem-ipsum";
+} from "@chakra-ui/react"
+import LoremIpsum from "react-lorem-ipsum"
 
-import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom"
+import { useEffect, useState } from "react"
 
-import { LoginDid } from "@zcloak/login-did";
-import { adaptZkidWallet } from "@zcloak/login-providers";
+import { Did } from "@zcloak/did"
+import { LoginDid } from "@zcloak/login-did"
+import { adaptZkidWallet, ExtensionProvider } from "@zcloak/login-providers"
+import { ZkidWalletProvider } from "@zcloak/login-providers/types"
 
 function Landing() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
-  const [account, setAccount] = useState(null);
-  const [logged, setLogged] = useState(false);
-  const navigate = useNavigate();
+  const [account, setAccount] = useState(null)
+  const [logged, setLogged] = useState(false)
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (account) {
       setTimeout(() => {
-        console.log("Redirect");
-        navigate("/owner/overview");
-      }, 2000);
+        console.log("Redirect")
+        navigate("/owner/overview")
+      }, 2000)
     }
-  }, [account, navigate]);
+  }, [account, navigate])
 
   const connectWallet = async () => {
     try {
-      const { ethereum } = window;
+      const { ethereum } = window
 
       if (!ethereum) {
-        alert(`please install zCloak wallet`);
-        return;
+        alert(`please install zCloak wallet`)
+        return
       }
 
       const accounts = await ethereum.request({
         method: "eth_requestAccounts",
         params: [],
-      });
+      })
 
       if (accounts !== 0) {
-        setLogged(true);
-        setAccount(accounts[0]);
+        setLogged(true)
+        setAccount(accounts[0])
         return (
           <ModalContent>
             <ModalHeader fontSize={24} color="#333" textAlign="center">
@@ -79,7 +81,7 @@ function Landing() {
               />
             </ModalFooter>
           </ModalContent>
-        );
+        )
       } else {
         return (
           <Modal
@@ -103,23 +105,23 @@ function Landing() {
               </ModalFooter>
             </ModalContent>
           </Modal>
-        );
+        )
       }
     } catch (err) {
-      console.error(err);
+      console.error(err)
     }
-  };
+  }
 
   const connectZkIDWallet = async () => {
-    const provider = adaptZkidWallet();
-    const challenge = new Date().getTime();
+    const provider = adaptZkidWallet()
+    const challenge = new Date().getTime()
 
-    await provider.requestAuthAndLogin(challenge);
-    const did = await LoginDid.fromProvider(provider);
-    console.log(did.id);
+    await provider.requestAuthAndLogin(challenge)
+    const did = await LoginDid.fromProvider(provider)
+    console.log(did.id)
     if (did.id) {
-      setLogged(true);
-      setAccount(did.id);
+      setLogged(true)
+      setAccount(did.id)
       return (
         <ModalContent>
           <ModalHeader fontSize={24} color="#333" textAlign="center">
@@ -144,7 +146,7 @@ function Landing() {
             />
           </ModalFooter>
         </ModalContent>
-      );
+      )
     } else {
       return (
         <Modal
@@ -168,9 +170,9 @@ function Landing() {
             </ModalFooter>
           </ModalContent>
         </Modal>
-      );
+      )
     }
-  };
+  }
 
   return (
     <>
@@ -280,7 +282,7 @@ function Landing() {
         )}
       </Modal>
     </>
-  );
+  )
 }
 
-export default Landing;
+export default Landing
