@@ -13,50 +13,48 @@ import {
   AlertIcon,
   Spinner,
   ModalCloseButton,
-} from "@chakra-ui/react"
-import LoremIpsum from "react-lorem-ipsum"
+} from "@chakra-ui/react";
+import LoremIpsum from "react-lorem-ipsum";
 
-import { useNavigate } from "react-router-dom"
-import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
-import { Did } from "@zcloak/did"
-import { LoginDid } from "@zcloak/login-did"
-import { adaptZkidWallet, ExtensionProvider } from "@zcloak/login-providers"
-import { ZkidWalletProvider } from "@zcloak/login-providers/types"
+import { LoginDid } from "@zcloak/login-did";
+import { adaptZkidWallet } from "@zcloak/login-providers";
 
 function Landing() {
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const [account, setAccount] = useState(null)
-  const [logged, setLogged] = useState(false)
-  const navigate = useNavigate()
+  const [account, setAccount] = useState(null);
+  const [logged, setLogged] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (account) {
       setTimeout(() => {
-        console.log("Redirect")
-        navigate("/owner/overview")
-      }, 2000)
+        console.log("Redirect");
+        navigate("/owner/overview");
+      }, 2000);
     }
-  }, [account, navigate])
+  }, [account, navigate]);
 
   const connectWallet = async () => {
     try {
-      const { ethereum } = window
+      const { ethereum } = window;
 
       if (!ethereum) {
-        alert(`please install zCloak wallet`)
-        return
+        alert(`please install zCloak wallet`);
+        return;
       }
 
       const accounts = await ethereum.request({
         method: "eth_requestAccounts",
         params: [],
-      })
+      });
 
       if (accounts !== 0) {
-        setLogged(true)
-        setAccount(accounts[0])
+        setLogged(true);
+        setAccount(accounts[0]);
         return (
           <ModalContent>
             <ModalHeader fontSize={24} color="#333" textAlign="center">
@@ -81,7 +79,7 @@ function Landing() {
               />
             </ModalFooter>
           </ModalContent>
-        )
+        );
       } else {
         return (
           <Modal
@@ -105,14 +103,74 @@ function Landing() {
               </ModalFooter>
             </ModalContent>
           </Modal>
-        )
+        );
       }
     } catch (err) {
-      console.error(err)
+      console.error(err);
     }
-  }
+  };
 
-  const connectZkIDWallet = async () => {}
+  const connectZkIDWallet = async () => {
+    const provider = adaptZkidWallet();
+    const challenge = new Date().getTime();
+
+    await provider.requestAuthAndLogin(challenge);
+    const did = await LoginDid.fromProvider(provider);
+    console.log(did.id);
+    if (did.id) {
+      setLogged(true);
+      setAccount(did.id);
+      return (
+        <ModalContent>
+          <ModalHeader fontSize={24} color="#333" textAlign="center">
+            Welcome! 🎆
+          </ModalHeader>
+          <ModalBody>
+            <Alert status="success" borderRadius={9}>
+              <AlertIcon />
+              <h2 className="text-slate-700 text-md">
+                You've been connected to your wallet ✨
+              </h2>
+            </Alert>
+          </ModalBody>
+          <ModalFooter className="flex items-center justify-center gap-2">
+            <div className="text-gray-500">It takes a second...</div>
+            <Spinner
+              thickness="2px"
+              speed=".9s"
+              emptyColor="gray.200"
+              color="green.500"
+              size="md"
+            />
+          </ModalFooter>
+        </ModalContent>
+      );
+    } else {
+      return (
+        <Modal
+          isCentered
+          onClose={onClose}
+          isOpen={isOpen}
+          motionPreset="slideInBottom"
+        >
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>Modal Title</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+              <LoremIpsum count={2} />
+            </ModalBody>
+            <ModalFooter>
+              <Button colorScheme="blue" mr={3} onClick={onClose}>
+                Close
+              </Button>
+              <Button variant="ghost">Secondary Action</Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
+      );
+    }
+  };
 
   return (
     <>
@@ -191,7 +249,10 @@ function Landing() {
                   </WrapItem>
                   <p className="text-md">MetaMask</p>
                 </div>
-                <div className="py-6 px-28 border border-slate-100 border-solid rounded-md text-xl text-slate-700 shadow-md flex items-center justify-center gap-2 cursor-pointer w-full hover:bg-slate-200 hover:border-slate-200 transition">
+                <div
+                  onClick={connectZkIDWallet}
+                  className="py-6 px-28 border border-slate-100 border-solid rounded-md text-xl text-slate-700 shadow-md flex items-center justify-center gap-2 cursor-pointer w-full hover:bg-slate-200 hover:border-slate-200 transition"
+                >
                   <WrapItem>
                     <Avatar
                       size="sm"
@@ -219,7 +280,7 @@ function Landing() {
         )}
       </Modal>
     </>
-  )
+  );
 }
 
-export default Landing
+export default Landing;
