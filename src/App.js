@@ -1,24 +1,81 @@
-import logo from './logo.svg';
-import './App.css';
+import Landing from "./components/Landing";
+import { ChakraBaseProvider, extendBaseTheme } from "@chakra-ui/react";
+import chakraTheme from "@chakra-ui/theme";
+
+const {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  Button,
+  useDisclosure,
+  Skeleton,
+  SkeletonCircle,
+  SkeletonText,
+  Avatar,
+  AvatarBadge,
+  AvatarGroup,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
+  Spinner,
+  Stack,
+  IconButton,
+  Divider,
+  Badge,
+  Icon,
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
+} = chakraTheme.components;
+
+const theme = extendBaseTheme({
+  components: {
+    Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalHeader,
+    ModalFooter,
+    ModalBody,
+    ModalCloseButton,
+    Button,
+    useDisclosure,
+    Skeleton,
+    SkeletonCircle,
+    SkeletonText,
+    Avatar,
+    AvatarBadge,
+    AvatarGroup,
+    Alert,
+    AlertIcon,
+    AlertTitle,
+    AlertDescription,
+    Spinner,
+    Stack,
+    IconButton,
+    Divider,
+    Badge,
+    Icon,
+    Tabs,
+    TabList,
+    TabPanels,
+    Tab,
+    TabPanel,
+  },
+});
 
 function App() {
+  // return <Landing />;
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ChakraBaseProvider theme={theme}>
+      <Landing />
+    </ChakraBaseProvider>
   );
 }
 
