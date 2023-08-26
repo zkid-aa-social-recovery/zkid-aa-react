@@ -75,7 +75,7 @@ const AccountRecoveryPage = () => {
         </h2>
 
         {/* SELECT */}
-        <div className="w-full bg-gray-200 p-6 rounded-lg mt-6 shadow-lg">
+        <div className="w-full bg-white p-6 rounded-lg mt-6 shadow-lg">
           <Steps current={current} items={items} />
           <div style={contentStyle}>
             <div className="font-bold text-blue-700 flex items-center justify-center gap-8">
@@ -85,7 +85,7 @@ const AccountRecoveryPage = () => {
                 return (
                   <Checkbox
                     onChange={(e) => onChange(e, id)}
-                    className="hover:text-blue-600 text-blue-500 select-none cursor-pointer transition hover:scale-105 p-4 rounded-lg text-lg"
+                    className="hover:text-blue-600 text-blue-500 select-none cursor-pointer transition hover:scale-105 p-4 rounded-lg"
                   >
                     <p>{name}</p>
                   </Checkbox>
