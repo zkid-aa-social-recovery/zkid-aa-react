@@ -54,8 +54,6 @@ const Owner = () => {
     }
   }
 
-  const checkIfZkIdWalletIsConnected = async () => {}
-
   const formatString = (inputString) => {
     const frontPart = inputString.substring(0, 6)
     const backPart = inputString.substring(inputString.length - 3)
