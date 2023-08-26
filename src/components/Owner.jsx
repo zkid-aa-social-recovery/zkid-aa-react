@@ -61,6 +61,11 @@ const Owner = () => {
     return `${frontPart}...${backPart}`
   }
 
+  // TODO: Switch Account 时调用`recordNewOwner()`函数
+  const recordNewOwner = async () => {
+    console.Console.log("recordNewOwner")
+  }
+
   return (
     <>
       <div className="flex items-center justify-between h-screen bg-black">
@@ -180,7 +185,10 @@ const Owner = () => {
                   <ChevronRightIcon boxSize={6} color="gray.500" />
                 </div>
               </div>
-              <div className="flex items-center justify-between gap-2 w-full hover:bg-blue-100 bg-blue-50 py-4 px-6 rounded-xl shadow-md shadow-blue-200/20 cursor-pointer transition">
+              <div
+                className="flex items-center justify-between gap-2 w-full hover:bg-blue-100 bg-blue-50 py-4 px-6 rounded-xl shadow-md shadow-blue-200/20 cursor-pointer transition"
+                onClick={recordNewOwner}
+              >
                 <div className="flex items-center justify-center gap-2">
                   <Avatar
                     size="md"

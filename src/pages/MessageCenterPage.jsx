@@ -1,4 +1,5 @@
-import { Space, Table, Tag } from "antd"
+import { Space, Table } from "antd"
+import { useEffect, useState } from "react"
 
 const MessageCenterPage = () => {
   // 这里用了AntD的组件库 https://ant.design/components/table-cn#api
@@ -44,6 +45,13 @@ const MessageCenterPage = () => {
       age: "0x23854…A239",
     },
   ]
+
+  const [curUser, setCurUser] = useState("")
+
+  // 我在这里默认了一开始进入app的用户是 owner
+  // useEffect(() => {
+  //   setCurUser("owner")
+  // }, [])
 
   return (
     <>

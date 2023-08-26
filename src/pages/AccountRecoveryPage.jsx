@@ -28,6 +28,9 @@ const AccountRecoveryPage = () => {
   const [firContent, setFirContent] = useState(steps[0])
   const [secContent, setSecContent] = useState(steps[1])
 
+  // EVENT: Send Request 时调用合约的`verifierRegistration()`
+  const verifierRegistration = async () => {}
+
   // Use `check box` component
   const onChange = (e, id) => {
     console.log(`content${id} checked = ${e.target.checked}`)
