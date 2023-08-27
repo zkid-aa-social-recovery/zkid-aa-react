@@ -14,76 +14,76 @@ import {
   Box,
   AbsoluteCenter,
   WrapItem,
-} from "@chakra-ui/react";
-import { CopyIcon, ChevronRightIcon } from "@chakra-ui/icons";
-import { Outlet, NavLink } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { ethers } from "ethers";
-import dotenv from "dotenv";
-import path from "path";
-import { zkidAccountAbi } from "../utils/zkidAccountAbi";
+} from "@chakra-ui/react"
+import { CopyIcon, ChevronRightIcon } from "@chakra-ui/icons"
+import { Outlet, NavLink } from "react-router-dom"
+import { useEffect, useState } from "react"
+import { ethers } from "ethers"
+// import dotenv from "dotenv";
+// import path from "path";
+// import { zkidAccountAbi } from "../utils/zkidAccountAbi";
 
-dotenv.config({ path: path.resolve(__dirname, "../../.env") });
+// dotenv.config({ path: path.resolve(__dirname, "../../.env") });
 
 const Owner = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [account, setAccount] = useState(null);
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const [account, setAccount] = useState(null)
 
   useEffect(() => {
-    checkIfWalletIsConnected();
-  }, []);
+    checkIfWalletIsConnected()
+  }, [])
 
   const checkIfWalletIsConnected = async () => {
     try {
-      const { ethereum } = window;
+      const { ethereum } = window
 
       if (ethereum) {
-        console.log(`metamask is available`);
+        console.log(`metamask is available`)
       } else {
-        console.log(`please try again`);
+        console.log(`please try again`)
       }
 
       const accounts = await ethereum.request({
         method: "eth_requestAccounts",
         params: [],
-      });
+      })
 
       if (accounts.length !== 0) {
-        const account = accounts[0];
-        console.log(`found account with address`, account);
-        setAccount(account);
+        const account = accounts[0]
+        console.log(`found account with address`, account)
+        setAccount(account)
       } else {
-        alert(`no authorized account found`);
+        alert(`no authorized account found`)
       }
     } catch (err) {
-      console.error(err);
+      console.error(err)
     }
-  };
+  }
 
   const formatString = (inputString) => {
-    const frontPart = inputString.substring(0, 6);
-    const backPart = inputString.substring(inputString.length - 3);
+    const frontPart = inputString.substring(0, 6)
+    const backPart = inputString.substring(inputString.length - 3)
 
-    return `${frontPart}...${backPart}`;
-  };
+    return `${frontPart}...${backPart}`
+  }
 
-  const recordNewOwner = async () => {
-    console.Console.log("recordNewOwner");
-    const provider = new ethers.providers.AlchemyProvider(
-      "goerli",
-      process.env.ALCHEMY_API
-    );
-    const depolyer = new ethers.Wallet(process.env.DEPLOYER_SK, provider);
-    const zkidAccount = new ethers.Contract(
-      process.env.DEMO_ZKIDACCOUNT,
-      zkidAccountAbi,
-      depolyer
-    );
+  // const recordNewOwner = async () => {
+  //   console.Console.log("recordNewOwner");
+  //   const provider = new ethers.providers.AlchemyProvider(
+  //     "goerli",
+  //     process.env.ALCHEMY_API
+  //   );
+  //   const depolyer = new ethers.Wallet(process.env.DEPLOYER_SK, provider);
+  //   const zkidAccount = new ethers.Contract(
+  //     process.env.DEMO_ZKIDACCOUNT,
+  //     zkidAccountAbi,
+  //     depolyer
+  //   );
 
-    // call contract
-    const tx = await zkidAccount.recordNewOwner(account);
-    await tx.wait();
-  };
+  //   // call contract
+  //   const tx = await zkidAccount.recordNewOwner(account);
+  //   await tx.wait();
+  // };
 
   return (
     <>
@@ -206,7 +206,7 @@ const Owner = () => {
               </div>
               <div
                 className="flex items-center justify-between gap-2 w-full hover:bg-blue-100 bg-blue-50 py-4 px-6 rounded-xl shadow-md shadow-blue-200/20 cursor-pointer transition"
-                onClick={recordNewOwner}
+                // onClick={recordNewOwner}
               >
                 <div className="flex items-center justify-center gap-2">
                   <Avatar
@@ -267,7 +267,7 @@ const Owner = () => {
         </ModalContent>
       </Modal>
     </>
-  );
-};
+  )
+}
 
-export default Owner;
+export default Owner
